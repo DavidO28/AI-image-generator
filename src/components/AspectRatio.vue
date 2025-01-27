@@ -38,7 +38,7 @@
     const dimensions: Record<string, [number, number]> = {
       landscape: [1080, 566],
       square: [1080, 1080],
-      portrait: [1080, 1350],
+      portrait: [566, 1080],
     }
     if (dimensions[ratio]) {
       [cardStore.width, cardStore.height] = dimensions[ratio]

@@ -6,10 +6,9 @@
     />
     <button @click="generateImage">Generate</button>
     <img
-      v-if="cardStore.card[0].isLoading"
       :src="cardStore.card[0].url"
-      width="500"
-      height="250"
+      :width="cardStore.width ?? 0"
+      :height="cardStore.height ?? 0"
     />
   </div>
 </template>
