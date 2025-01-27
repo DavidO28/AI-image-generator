@@ -41,7 +41,7 @@
       portrait: [1080, 1350],
     }
     if (dimensions[ratio]) {
-      ;[cardStore.width, cardStore.height] = dimensions[ratio]
+      [cardStore.width, cardStore.height] = dimensions[ratio]
     }
   }
 </script>
