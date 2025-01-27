@@ -1,23 +1,23 @@
 <template>
-  <v-label class="mb-2">Aspect Ratio</v-label>
+  <v-label class="mb-2">Image Aspect Ratio</v-label>
   <v-divider class="mb-4" />
   <div class="d-flex flex-wrap align-center justify-center">
     <div
-      class="button-size flex-grow-1 pa-4 flex-row align-center rounded border-primary text-caption aspect-ratio-chip font-weight-bold landscape"
+      class="button-size ma-1 pa-4 flex-row align-center rounded border-primary text-caption aspect-ratio-chip font-weight-bold landscape"
       :class="aspectRatio === 'landscape' ? 'selected' : 'unselected'"
       @click="setAspectRatio('landscape')"
     >
       16:9 Landscape
     </div>
     <div
-      class="button-size pa-4 my-2 flex-grow-1 flex-row align-center rounded border-primary text-caption aspect-ratio-chip font-weight-bold square"
+      class="button-size pa-4 ma-1flex-row align-center rounded border-primary text-caption aspect-ratio-chip font-weight-bold square"
       :class="aspectRatio === 'square' ? 'selected' : 'unselected'"
       @click="setAspectRatio('square')"
     >
       1:1 Square
     </div>
     <div
-      class="button-size pa-4 flex-grow-1 flex-row align-center rounded border-primary text-caption aspect-ratio-chip font-weight-bold portrait"
+      class="button-size pa-4 ma-1 flex-row align-center rounded border-primary text-caption aspect-ratio-chip font-weight-bold portrait"
       :class="aspectRatio === 'portrait' ? 'selected' : 'unselected'"
       @click="setAspectRatio('portrait')"
     >
@@ -31,30 +31,29 @@
   import { ref } from 'vue'
 
   const cardStore = useCardStore()
-  const aspectRatio = ref<string>()
+  const aspectRatio = ref('landscape')
+  const ratios = [
+    { value: 'landscape', label: '16:9 Landscape' },
+    { value: 'square', label: '1:1 Square' },
+    { value: 'portrait', label: '9:16 Portrait' },
+  ]
 
   const setAspectRatio = (ratio: string) => {
     aspectRatio.value = ratio
-    if (ratio === 'landscape') {
-      cardStore.width = 1080
-      cardStore.height = 566
-    } else if (ratio === 'square') {
-      cardStore.width = 1080
-      cardStore.height = 1080
-    } else if (ratio === 'portrait') {
-      cardStore.width = 1080
-      cardStore.height = 1350
+    const dimensions: Record<string, [number, number]> = {
+      landscape: [1080, 566],
+      square: [1080, 1080],
+      portrait: [1080, 1350],
     }
-  }
-
-  if (!aspectRatio.value) {
-    setAspectRatio('landscape')
+    if (dimensions[ratio]) {
+      ;[cardStore.width, cardStore.height] = dimensions[ratio]
+    }
   }
 </script>
 
 <style scoped>
   .selected {
-    border: 2px solid #ff9ecf;
+    border: 2px solid #2d04f7;
     cursor: pointer;
   }
 
@@ -64,7 +63,7 @@
   }
 
   .selected-bg-color {
-    background-color: #ff9ecf;
+    background-color: #2d04f7;
   }
 
   .caption-style {
@@ -89,7 +88,7 @@
   }
 
   .aspect-ratio-chip.selected::before {
-    background-color: #ff9ecf;
+    background-color: #2d04f7;
   }
 
   .aspect-ratio-chip.landscape::before {
@@ -115,7 +114,7 @@
   }
 
   .button-size {
-    width: 300px !important;
+    width: 200px !important;
     height: 50px !important;
   }
 </style>
