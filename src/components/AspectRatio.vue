@@ -32,11 +32,6 @@
 
   const cardStore = useCardStore()
   const aspectRatio = ref('landscape')
-  const ratios = [
-    { value: 'landscape', label: '16:9 Landscape' },
-    { value: 'square', label: '1:1 Square' },
-    { value: 'portrait', label: '9:16 Portrait' },
-  ]
 
   const setAspectRatio = (ratio: string) => {
     aspectRatio.value = ratio
