@@ -7,7 +7,7 @@
         class="frame"
       >
         <img
-          v-if="frame.url"
+          v-if="frame.url && !frame.isLoading"
           :src="frame.url"
         />
         <div
@@ -15,8 +15,15 @@
           class="icon-container"
           v-else
         >
-          <v-icon>mdi-creation</v-icon>
-          {{ frame.isLoading ? 'Generating...' : 'Generate image' }}
+          <v-progress-circular
+            v-if="frame.isLoading"
+            color="primary"
+            indeterminate
+          ></v-progress-circular>
+          <v-icon v-else>mdi-creation</v-icon>
+          <span class="ms-3">
+            {{ frame.isLoading ? 'Generating...' : 'Generate image' }}
+          </span>
         </div>
 
         <input
@@ -60,15 +67,35 @@
 
   const addNewFrame = () => cardStore.addCard()
 
-  const generateImage = (index: number) => {
+  const generateImage = async (index: number) => {
     const frame = cardStore.card[index]
+
     if (!frame.prompt.trim()) {
       errorState.value = true
       errorMessage.value = 'Prompt is required'
       return
     }
+
     frame.isLoading = true
-    frame.url = `https://image.pollinations.ai/prompt/${frame.prompt}?width=${frame.width}&height=${frame.height}`
+
+    try {
+      const response = await fetch(
+        `https://image.pollinations.ai/prompt/${frame.prompt}?width=${frame.width}&height=${frame.height}`,
+      )
+
+      if (response.ok) {
+        const imageBlob = await response.blob()
+        frame.url = URL.createObjectURL(imageBlob)
+      } else {
+        errorState.value = true
+        errorMessage.value = 'Failed to generate image'
+      }
+    } catch (error) {
+      errorState.value = true
+      errorMessage.value = 'An error occurred while generating the image'
+    } finally {
+      frame.isLoading = false
+    }
   }
 </script>
 
@@ -103,6 +130,9 @@
     width: 100%;
     height: 300px;
     object-fit: cover;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
   }
 
   .input {
