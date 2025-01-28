@@ -16,10 +16,21 @@ export const useCardStore = defineStore('card', () => {
     },
   ])
 
+  const addCard = () => {
+    card.value.push({
+      width: '',
+      height: '',
+      prompt: '',
+      url: '',
+      isLoading: false,
+    })
+  }
+
   return {
     prompt,
     width,
     height,
     card,
+    addCard,
   }
 })
