@@ -85,6 +85,18 @@
     height: 1.6rem;
   }
 
+  @keyframes scaling {
+    from {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
   .button {
     width: 200px !important;
     height: 70px !important;
@@ -92,6 +104,8 @@
     color: white;
     cursor: pointer;
     transition: 0.3s all;
+    animation-name: scaling;
+    animation-duration: 1s;
   }
 
   .button:hover {

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="pa-3">
     <div class="card-wrapper">
       <div
         v-for="(frame, index) in cardStore.card"
@@ -25,17 +25,27 @@
             {{ frame.isLoading ? 'Generating...' : 'Generate image' }}
           </span>
         </div>
-
-        <input
+        <v-divider></v-divider>
+        <textarea
+          class="text-input px-2 py-1"
           v-model="frame.prompt"
-          placeholder="Enter prompt"
-        />
+          placeholder="Enter your prompt"
+        ></textarea>
       </div>
     </div>
+
     <v-btn
-      icon="mdi-plus"
+      class="frame-btn"
       @click="addNewFrame"
-    />
+    >
+      <v-icon>mdi-plus</v-icon>
+      <v-tooltip
+        activator="parent"
+        location="top"
+      >
+        Add new frame
+      </v-tooltip>
+    </v-btn>
   </div>
 
   <v-snackbar
@@ -100,15 +110,6 @@
 </script>
 
 <style scoped>
-  .container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    padding: 16px;
-    width: 100%;
-    height: 100vh;
-  }
-
   .card-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -119,8 +120,8 @@
   .frame {
     width: 400px;
     height: 400px;
-    border: 2px solid greenyellow;
-    border-radius: 20px;
+    border: 2px solid black;
+    border-radius: 10px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -135,11 +136,11 @@
     -webkit-user-drag: none;
   }
 
-  .input {
-    padding: 8px;
+  .text-input {
     width: 100%;
     height: 100px !important;
-    outline: none;
+    resize: none;
+    scrollbar-width: thin;
   }
 
   .icon-container {
@@ -154,5 +155,13 @@
 
   .icon-container:hover {
     background-color: aquamarine;
+  }
+
+  .frame-btn {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    height: 60px;
+    border-radius: 50%;
   }
 </style>
