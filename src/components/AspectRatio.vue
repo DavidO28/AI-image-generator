@@ -7,19 +7,19 @@
     <div class="d-flex flex-wrap align-center justify-center">
       <div
         class="button ma-3 pa-4 flex-row align-center rounded border-primary text-caption aspect-ratio-chip font-weight-bold landscape"
-        @click="setAspectRatio('landscape')"
+        @click="cardStore.setAspectRatio('landscape')"
       >
         16:9 Landscape
       </div>
       <div
         class="button pa-4 ma-3 flex-row align-center rounded border-primary text-caption aspect-ratio-chip font-weight-bold square"
-        @click="setAspectRatio('square')"
+        @click="cardStore.setAspectRatio('square')"
       >
         1:1 Square
       </div>
       <div
         class="button pa-4 ma-3 flex-row align-center rounded border-primary text-caption aspect-ratio-chip font-weight-bold portrait"
-        @click="setAspectRatio('portrait')"
+        @click="cardStore.setAspectRatio('portrait')"
       >
         9:16 Portrait
       </div>
@@ -29,22 +29,8 @@
 
 <script setup lang="ts">
   import { useCardStore } from '@/store/card'
-  import { ref } from 'vue'
 
   const cardStore = useCardStore()
-  const aspectRatio = ref('')
-
-  const setAspectRatio = (ratio: string) => {
-    aspectRatio.value = ratio
-    const dimensions: Record<string, [number, number]> = {
-      landscape: [1080, 566],
-      square: [1080, 1080],
-      portrait: [566, 1080],
-    }
-    if (dimensions[ratio]) {
-      ;[cardStore.width, cardStore.height] = dimensions[ratio]
-    }
-  }
 </script>
 
 <style scoped>

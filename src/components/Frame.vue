@@ -5,14 +5,17 @@
         v-for="(frame, index) in cardStore.card"
         :key="index"
         class="frame"
+        :style="getFrameStyles"
       >
         <img
           v-if="frame.url && !frame.isLoading"
           :src="frame.url"
+          :style="getImageStyles"
         />
         <div
           @click="generateImage(index)"
           class="icon-container"
+          :style="getImageStyles"
           v-else
         >
           <v-progress-circular
@@ -68,7 +71,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { ref, computed } from 'vue'
   import { useCardStore } from '@/store/card'
 
   const cardStore = useCardStore()
@@ -107,6 +110,28 @@
       frame.isLoading = false
     }
   }
+
+  const getFrameStyles = computed(() => {
+    if (cardStore.aspectRatio === 'landscape') {
+      return { width: '400px', height: '400px' }
+    } else if (cardStore.aspectRatio === 'square') {
+      return { width: '300px', height: '300px' }
+    } else if (cardStore.aspectRatio === 'portrait') {
+      return { width: '400px', height: '600px' }
+    }
+    return {}
+  })
+
+  const getImageStyles = computed(() => {
+    if (cardStore.aspectRatio === 'landscape') {
+      return { height: '300px' }
+    } else if (cardStore.aspectRatio === 'square') {
+      return { height: '200px' }
+    } else if (cardStore.aspectRatio === 'portrait') {
+      return { height: '500px' }
+    }
+    return {}
+  })
 </script>
 
 <style scoped>
