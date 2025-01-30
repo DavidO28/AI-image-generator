@@ -1,20 +1,21 @@
 <template>
   <div class="pa-3">
-    <div class="card-wrapper">
+    <div class="d-flex flex-wrap justify-center ga-4">
       <div
         v-for="(frame, index) in cardStore.card"
         :key="index"
-        class="frame"
+        class="frame rounded-lg overflow-hidden d-flex flex-column"
         :style="getFrameStyles"
       >
-        <img
+        <v-img
           v-if="frame.url && !frame.isLoading"
           :src="frame.url"
           :style="getImageStyles"
+          cover
         />
         <div
           @click="generateImage(index)"
-          class="icon-container"
+          class="icon-container position-relative d-flex justify-center align-center overflow-hidden cursor-pointer"
           :style="getImageStyles"
           v-else
         >
@@ -38,7 +39,7 @@
     </div>
 
     <v-btn
-      class="frame-btn"
+      class="frame-btn position-fixed rounded-circle"
       @click="addNewFrame"
     >
       <v-icon>mdi-plus</v-icon>
@@ -135,54 +136,42 @@
 </script>
 
 <style scoped>
-  .card-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px;
-  }
-
   .frame {
-    border: 2px solid black;
-    border-radius: 10px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .frame img {
-    width: 100%;
-    object-fit: cover;
-    pointer-events: none;
-    user-select: none;
-    -webkit-user-drag: none;
+    box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.25);
   }
 
   .text-input {
-    width: 100%;
-    height: 50px;
     resize: none;
     scrollbar-width: thin;
+    outline: none;
   }
 
-  .icon-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    cursor: pointer;
-    transition: 0.2s background-color;
+  .icon-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      0deg,
+      transparent,
+      transparent 30%,
+      rgba(0, 255, 255, 0.3)
+    );
+    transform: rotate(-45deg);
+    transition: all 0.75s ease;
+    opacity: 0;
   }
 
-  .icon-container:hover {
-    background-color: aquamarine;
+  .icon-container:hover::before {
+    opacity: 1;
+    transform: rotate(-45deg) translateY(100%);
   }
 
   .frame-btn {
-    position: fixed;
     right: 10px;
     bottom: 10px;
     height: 60px;
-    border-radius: 50%;
   }
 </style>
