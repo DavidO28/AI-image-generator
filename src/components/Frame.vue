@@ -141,6 +141,7 @@
   }
 
   .text-input {
+    height: 50px;
     resize: none;
     scrollbar-width: thin;
     outline: none;
