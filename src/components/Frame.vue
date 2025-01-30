@@ -113,22 +113,22 @@
 
   const getFrameStyles = computed(() => {
     if (cardStore.aspectRatio === 'landscape') {
-      return { width: '400px', height: '400px' }
+      return { width: '300px', height: '250px' }
     } else if (cardStore.aspectRatio === 'square') {
-      return { width: '300px', height: '300px' }
+      return { width: '250px', height: '250px' }
     } else if (cardStore.aspectRatio === 'portrait') {
-      return { width: '400px', height: '600px' }
+      return { width: '300px', height: '500px' }
     }
     return {}
   })
 
   const getImageStyles = computed(() => {
     if (cardStore.aspectRatio === 'landscape') {
-      return { height: '300px' }
+      return { height: '200px' }
     } else if (cardStore.aspectRatio === 'square') {
       return { height: '200px' }
     } else if (cardStore.aspectRatio === 'portrait') {
-      return { height: '500px' }
+      return { height: '450px' }
     }
     return {}
   })
@@ -143,8 +143,6 @@
   }
 
   .frame {
-    width: 400px;
-    height: 400px;
     border: 2px solid black;
     border-radius: 10px;
     overflow: hidden;
@@ -154,7 +152,6 @@
 
   .frame img {
     width: 100%;
-    height: 300px;
     object-fit: cover;
     pointer-events: none;
     user-select: none;
@@ -163,7 +160,7 @@
 
   .text-input {
     width: 100%;
-    height: 100px !important;
+    height: 50px;
     resize: none;
     scrollbar-width: thin;
   }
@@ -173,7 +170,6 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 300px;
     cursor: pointer;
     transition: 0.2s background-color;
   }
