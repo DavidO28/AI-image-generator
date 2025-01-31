@@ -1,28 +1,31 @@
 <template>
   <div
-    class="h-screen container d-flex flex-column justify-center align-center text-center"
+    class="container h-screen d-flex flex-column justify-center align-center text-center"
   >
-    <v-label class="mb-2 font-weight-black">Choose Image Aspect Ratio</v-label>
-    <v-divider class="mb-4" />
-    <div class="d-flex flex-wrap align-center justify-center">
-      <div
-        class="button ma-3 pa-4 flex-row align-center rounded border-primary text-caption aspect-ratio-chip font-weight-bold landscape"
+    <h3 class="mb-4">Choose Image Aspect Ratio</h3>
+
+    <div class="d-flex flex-wrap align-center justify-center ga-5">
+      <v-btn
+        variant="outlined"
+        class="button aspect-ratio-chip landscape font-weight-bold"
         @click="cardStore.setAspectRatio('landscape')"
       >
         16:9 Landscape
-      </div>
-      <div
-        class="button pa-4 ma-3 flex-row align-center rounded border-primary text-caption aspect-ratio-chip font-weight-bold square"
+      </v-btn>
+      <v-btn
+        variant="outlined"
+        class="button aspect-ratio-chip square font-weight-bold"
         @click="cardStore.setAspectRatio('square')"
       >
         1:1 Square
-      </div>
-      <div
-        class="button pa-4 ma-3 flex-row align-center rounded border-primary text-caption aspect-ratio-chip font-weight-bold portrait"
+      </v-btn>
+      <v-btn
+        variant="outlined"
+        class="button aspect-ratio-chip portrait font-weight-bold"
         @click="cardStore.setAspectRatio('portrait')"
       >
         9:16 Portrait
-      </div>
+      </v-btn>
     </div>
   </div>
 </template>
@@ -41,24 +44,17 @@
       rgba(218, 15, 183, 1) 74.9%
     );
   }
-  .aspect-ratio-chip {
-    display: inline-flex;
-    align-items: center;
-    font-weight: bold;
-    text-transform: none;
-  }
 
   .aspect-ratio-chip::before {
     content: '';
     margin-right: 0.5rem;
-    background-color: white;
+    background-color: black;
     transition: 0.3s all;
   }
 
   .aspect-ratio-chip.landscape::before {
     width: 1.6rem;
     height: 0.9rem;
-    aspect-ratio: 16/9;
   }
 
   .aspect-ratio-chip.square::before {
@@ -71,31 +67,14 @@
     height: 1.6rem;
   }
 
-  @keyframes scaling {
-    from {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.05);
-    }
-    to {
-      transform: scale(1);
-    }
-  }
-
   .button {
-    width: 200px !important;
-    height: 70px !important;
-    border: 2px solid white;
-    color: white;
-    cursor: pointer;
+    width: 200px;
+    height: 55px;
     transition: 0.3s all;
-    animation-name: scaling;
-    animation-duration: 1s;
   }
 
   .button:hover {
-    border: 2px solid greenyellow;
+    border: 1px solid greenyellow;
     color: greenyellow;
     transform: scale(1.1);
   }
