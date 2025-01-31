@@ -35,6 +35,13 @@
           v-model="frame.prompt"
           placeholder="Enter your prompt"
         ></textarea>
+        <v-chip
+          variant="elevated"
+          color="teal"
+          class="position-absolute ma-1 border-md border-primary font-weight-bold"
+        >
+          {{ index + 1 }}
+        </v-chip>
       </div>
     </div>
 
@@ -79,7 +86,15 @@
   const errorState = ref(false)
   const errorMessage = ref('')
 
-  const addNewFrame = () => cardStore.addCard()
+  const addNewFrame = () => {
+    cardStore.addCard()
+    setTimeout(() => {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth',
+      })
+    }, 100)
+  }
 
   const generateImage = async (index: number) => {
     const frame = cardStore.card[index]
