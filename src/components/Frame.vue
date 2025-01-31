@@ -1,63 +1,70 @@
 <template>
-  <div class="pa-3">
-    <div class="d-flex flex-wrap justify-center ga-4">
-      <div
-        v-for="(frame, index) in cardStore.card"
-        :key="index"
-        class="frame rounded-lg overflow-hidden d-flex flex-column"
-        :style="getFrameStyles"
-      >
-        <v-img
-          v-if="frame.url && !frame.isLoading"
-          :src="frame.url"
-          :style="getImageStyles"
-          cover
-        />
-        <div
-          @click="generateImage(index)"
-          class="icon-container position-relative d-flex justify-center align-center overflow-hidden cursor-pointer"
-          :style="getImageStyles"
-          v-else
-        >
-          <v-progress-circular
-            v-if="frame.isLoading"
-            color="primary"
-            indeterminate
-          ></v-progress-circular>
-          <v-icon v-else>mdi-creation</v-icon>
-          <span class="ms-3">
-            {{ frame.isLoading ? 'Generating...' : 'Generate image' }}
-          </span>
-        </div>
-        <v-divider></v-divider>
-        <textarea
-          class="text-input px-2 py-1"
-          v-model="frame.prompt"
-          placeholder="Enter your prompt"
-        ></textarea>
-        <v-chip
-          variant="elevated"
-          color="teal"
-          class="position-absolute ma-1 border-md border-primary font-weight-bold"
-        >
-          {{ index + 1 }}
-        </v-chip>
-      </div>
-    </div>
-
-    <v-btn
-      class="frame-btn position-fixed rounded-circle"
-      @click="addNewFrame"
+  <div class="d-flex flex-wrap justify-center ga-4 pa-3">
+    <div
+      v-for="(frame, index) in cardStore.card"
+      :key="index"
+      class="border-md rounded-lg overflow-hidden d-flex flex-column"
+      :style="getFrameStyles"
     >
-      <v-icon>mdi-plus</v-icon>
-      <v-tooltip
-        activator="parent"
-        location="top"
+      <v-hover>
+        <template v-slot:default="{ isHovering, props }">
+          <v-img
+            v-if="frame.url && !frame.isLoading"
+            :src="frame.url"
+            :style="getImageStyles"
+            cover
+            class="image"
+          />
+          <v-card
+            variant="flat"
+            v-bind="props"
+            :color="isHovering ? 'green-accent-3' : undefined"
+            @click="generateImage(index)"
+            class="position-relative d-flex justify-center align-center overflow-hidden cursor-pointer"
+            :style="getImageStyles"
+            v-else
+          >
+            <v-progress-circular
+              v-if="frame.isLoading"
+              color="black"
+              indeterminate
+            ></v-progress-circular>
+            <v-icon v-else>mdi-creation</v-icon>
+            <span class="ms-3">
+              {{ frame.isLoading ? 'Generating...' : 'Generate image' }}
+            </span>
+          </v-card>
+        </template>
+      </v-hover>
+
+      <v-divider></v-divider>
+      <textarea
+        class="text-input px-2 py-1"
+        v-model="frame.prompt"
+        placeholder="Enter your prompt"
+      ></textarea>
+      <v-chip
+        variant="elevated"
+        color="teal"
+        class="position-absolute ma-1 border-md border-primary font-weight-bold"
       >
-        Add new frame
-      </v-tooltip>
-    </v-btn>
+        {{ index + 1 }}
+      </v-chip>
+    </div>
   </div>
+
+  <v-btn
+    class="frame-btn position-fixed rounded-circle"
+    @click="addNewFrame"
+  >
+    <v-icon>mdi-plus</v-icon>
+    <v-tooltip
+      activator="parent"
+      location="top"
+    >
+      Add new frame
+    </v-tooltip>
+  </v-btn>
 
   <v-snackbar
     v-model="errorState"
@@ -151,38 +158,11 @@
 </script>
 
 <style scoped>
-  .frame {
-    box-shadow: 0 0 7px 1px rgba(0, 0, 0, 0.25);
-  }
-
   .text-input {
     height: 50px;
     resize: none;
     scrollbar-width: thin;
     outline: none;
-  }
-
-  .icon-container::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-      0deg,
-      transparent,
-      transparent 30%,
-      rgba(0, 255, 255, 0.3)
-    );
-    transform: rotate(-45deg);
-    transition: all 0.75s ease;
-    opacity: 0;
-  }
-
-  .icon-container:hover::before {
-    opacity: 1;
-    transform: rotate(-45deg) translateY(100%);
   }
 
   .frame-btn {
