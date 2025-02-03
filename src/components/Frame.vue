@@ -33,6 +33,22 @@
             <span class="ms-3">
               {{ frame.isLoading ? 'Generating...' : 'Generate image' }}
             </span>
+            <v-chip
+              variant="elevated"
+              color="teal"
+              class="position-absolute left-0 top-0 ma-1 border-md border-primary font-weight-bold chip"
+            >
+              {{ index + 1 }}
+            </v-chip>
+            <v-chip
+              v-if="cardStore.card.length > 1"
+              @click.stop="deleteFrame(frame.id)"
+              variant="elevated"
+              color="red"
+              class="position-absolute ma-1 border-md border-primary font-weight-bold right-0 top-0 chip"
+            >
+              <v-icon>mdi-delete</v-icon>
+            </v-chip>
           </v-card>
         </template>
       </v-hover>
@@ -43,13 +59,6 @@
         v-model="frame.prompt"
         placeholder="Enter your prompt"
       ></textarea>
-      <v-chip
-        variant="elevated"
-        color="teal"
-        class="position-absolute ma-1 border-md border-primary font-weight-bold"
-      >
-        {{ index + 1 }}
-      </v-chip>
     </div>
   </div>
 
@@ -155,6 +164,10 @@
     }
     return {}
   })
+
+  const deleteFrame = (id: number) => {
+    cardStore.card = cardStore.card.filter((card) => card.id !== id)
+  }
 </script>
 
 <style scoped>
@@ -169,5 +182,9 @@
     right: 10px;
     bottom: 10px;
     height: 60px;
+  }
+
+  .chip {
+    z-index: 99 !important;
   }
 </style>

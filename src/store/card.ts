@@ -9,6 +9,7 @@ export const useCardStore = defineStore('card', () => {
 
   const card = ref([
     {
+      id: Math.random(),
       width: '',
       height: '',
       prompt: '',
@@ -19,6 +20,7 @@ export const useCardStore = defineStore('card', () => {
 
   const addCard = () => {
     card.value.push({
+      id: Math.random(),
       width: '',
       height: '',
       prompt: '',
