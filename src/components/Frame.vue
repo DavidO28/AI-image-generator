@@ -6,58 +6,58 @@
       class="border-md rounded-lg overflow-hidden d-flex flex-column"
       :style="getFrameStyles"
     >
-      <v-hover>
-        <template v-slot:default="{ isHovering, props }">
-          <v-img
-            v-if="frame.url && !frame.isLoading"
-            :src="frame.url"
-            :style="getImageStyles"
-            cover
-            class="image"
-          />
-          <v-card
-            variant="flat"
-            v-bind="props"
-            :color="isHovering ? 'green-accent-3' : undefined"
-            @click="generateImage(index)"
-            class="position-relative d-flex justify-center align-center overflow-hidden cursor-pointer"
-            :style="getImageStyles"
-            v-else
-          >
-            <v-progress-circular
-              v-if="frame.isLoading"
-              color="black"
-              indeterminate
-            ></v-progress-circular>
-            <v-icon v-else>mdi-creation</v-icon>
-            <span class="ms-3">
-              {{ frame.isLoading ? 'Generating...' : 'Generate image' }}
-            </span>
-            <v-chip
-              variant="elevated"
-              color="teal"
-              class="position-absolute left-0 top-0 ma-1 border-md border-primary font-weight-bold chip"
-            >
-              {{ index + 1 }}
-            </v-chip>
-            <v-chip
-              v-if="cardStore.card.length > 1"
-              @click.stop="deleteFrame(frame.id)"
-              variant="elevated"
-              color="red"
-              class="position-absolute ma-1 border-md border-primary font-weight-bold right-0 top-0 chip"
-            >
-              <v-icon>mdi-delete</v-icon>
-            </v-chip>
-          </v-card>
-        </template>
-      </v-hover>
+      <v-card
+        variant="flat"
+        class="position-relative"
+        :style="getImageStyles"
+      >
+        <v-img
+          v-if="frame.url && !frame.isLoading"
+          :src="frame.url"
+          :style="getImageStyles"
+          cover
+          class="image"
+        />
+        <div
+          v-else
+          :class="{ 'hover-effect': !frame.url }"
+          class="w-100 h-100 d-flex justify-center align-center overflow-hidden cursor-pointer"
+          @click="generateImage(index)"
+        >
+          <v-progress-circular
+            v-if="frame.isLoading"
+            color="black"
+            indeterminate
+          ></v-progress-circular>
+          <v-icon v-else>mdi-creation</v-icon>
+          <span class="ms-3">
+            {{ frame.isLoading ? 'Generating...' : 'Generate image' }}
+          </span>
+        </div>
+        <v-chip
+          variant="elevated"
+          color="teal"
+          class="position-absolute left-0 top-0 ma-1 border-md border-primary font-weight-bold chip"
+        >
+          {{ index + 1 }}
+        </v-chip>
+        <v-chip
+          v-if="cardStore.card.length > 1"
+          @click.stop="deleteFrame(frame.id)"
+          variant="elevated"
+          color="red"
+          class="position-absolute ma-1 border-md border-primary font-weight-bold right-0 top-0 chip"
+        >
+          <v-icon>mdi-delete</v-icon>
+        </v-chip>
+      </v-card>
 
       <v-divider></v-divider>
       <textarea
         class="text-input px-2 py-1"
         v-model="frame.prompt"
         placeholder="Enter your prompt"
+        name="prompt"
       ></textarea>
     </div>
   </div>
@@ -171,6 +171,15 @@
 </script>
 
 <style scoped>
+  .hover-effect:hover {
+    background-color: greenyellow;
+  }
+
+  .image {
+    user-select: none;
+    pointer-events: none;
+  }
+
   .text-input {
     height: 50px;
     resize: none;
