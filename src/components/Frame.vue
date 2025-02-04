@@ -43,10 +43,9 @@
         </v-chip>
         <v-chip
           v-if="cardStore.card.length > 1"
-          @click.stop="deleteFrame(frame.id)"
           variant="elevated"
           color="red"
-          class="position-absolute ma-1 border-md border-primary font-weight-bold right-0 top-0 chip"
+          class="position-absolute ma-1 border-md border-primary font-weight-bold right-0 top-0 chip cursor-pointer"
         >
           <v-tooltip
             activator="parent"
@@ -54,11 +53,41 @@
           >
             Delete frame
           </v-tooltip>
+          <v-dialog
+            v-model="dialogs[index]"
+            max-width="250"
+            persistent
+            activator="parent"
+          >
+            <v-card
+              prepend-icon="mdi-delete"
+              title="Delete scene?"
+              class="d-flex flex-column justify-center align-center"
+            >
+              <template v-slot:actions>
+                <v-spacer></v-spacer>
+
+                <v-btn
+                  color="red"
+                  @click="dialogs[index] = false"
+                >
+                  No
+                </v-btn>
+
+                <v-btn
+                  color="green"
+                  @click.stop="deleteFrame(frame.id, index)"
+                >
+                  Yes
+                </v-btn>
+              </template>
+            </v-card>
+          </v-dialog>
           <v-icon>mdi-delete</v-icon>
         </v-chip>
         <v-chip
           v-if="frame.url"
-          @click="downloadImg(index)"
+          @click.stop="downloadImg(index)"
           variant="elevated"
           color="white"
           class="position-absolute ma-1 border-md border-primary font-weight-bold right-0 bottom-0 chip"
@@ -122,6 +151,7 @@
   const cardStore = useCardStore()
   const errorState = ref(false)
   const errorMessage = ref('')
+  const dialogs = ref<boolean[]>([])
 
   const addNewFrame = () => {
     cardStore.addCard()
@@ -186,8 +216,9 @@
     return {}
   })
 
-  const deleteFrame = (id: number) => {
+  const deleteFrame = (id: number, index: number) => {
     cardStore.card = cardStore.card.filter((card) => card.id !== id)
+    dialogs.value[index] = false
   }
 
   const downloadImg = (index: number) => {
@@ -237,9 +268,5 @@
     right: 10px;
     bottom: 10px;
     height: 60px;
-  }
-
-  .chip {
-    z-index: 99 !important;
   }
 </style>
