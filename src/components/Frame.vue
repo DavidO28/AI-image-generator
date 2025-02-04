@@ -48,6 +48,12 @@
           color="red"
           class="position-absolute ma-1 border-md border-primary font-weight-bold right-0 top-0 chip"
         >
+          <v-tooltip
+            activator="parent"
+            location="start"
+          >
+            Delete frame
+          </v-tooltip>
           <v-icon>mdi-delete</v-icon>
         </v-chip>
         <v-chip
@@ -57,6 +63,12 @@
           color="white"
           class="position-absolute ma-1 border-md border-primary font-weight-bold right-0 bottom-0 chip"
         >
+          <v-tooltip
+            activator="parent"
+            location="start"
+          >
+            Download
+          </v-tooltip>
           <v-icon>mdi-download</v-icon>
         </v-chip>
       </v-card>
