@@ -50,6 +50,15 @@
         >
           <v-icon>mdi-delete</v-icon>
         </v-chip>
+        <v-chip
+          v-if="frame.url"
+          @click="downloadImg(index)"
+          variant="elevated"
+          color="white"
+          class="position-absolute ma-1 border-md border-primary font-weight-bold right-0 bottom-0 chip"
+        >
+          <v-icon>mdi-download</v-icon>
+        </v-chip>
       </v-card>
 
       <v-divider></v-divider>
@@ -133,7 +142,7 @@
         frame.url = URL.createObjectURL(imageBlob)
       } else {
         errorState.value = true
-        errorMessage.value = 'Failed to generate image'
+        errorMessage.value = 'Failed to generate, Try changing prompt'
       }
     } catch (error) {
       errorState.value = true
@@ -167,6 +176,31 @@
 
   const deleteFrame = (id: number) => {
     cardStore.card = cardStore.card.filter((card) => card.id !== id)
+  }
+
+  const downloadImg = (index: number) => {
+    let imgPath = cardStore.card[index].url
+    let fileName = getFileName(imgPath)
+
+    fetch(imgPath)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.style.display = 'none'
+        a.href = url
+        a.download = fileName
+        document.body.appendChild(a)
+        a.click()
+        window.URL.revokeObjectURL(url)
+      })
+      .catch((error) => {
+        console.error('Download failed', error)
+      })
+  }
+
+  const getFileName = (str: string) => {
+    return str.substring(str.lastIndexOf('/') + 1)
   }
 </script>
 
