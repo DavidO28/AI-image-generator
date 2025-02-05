@@ -7,7 +7,7 @@ export const useCardStore = defineStore('card', () => {
   const height = ref<number | null>(null)
   const aspectRatio = ref<string>('')
 
-  const card = ref([
+  const frame = ref([
     {
       id: Math.random(),
       width: '',
@@ -19,7 +19,7 @@ export const useCardStore = defineStore('card', () => {
   ])
 
   const addCard = () => {
-    card.value.push({
+    frame.value.push({
       id: Math.random(),
       width: '',
       height: '',
@@ -47,7 +47,7 @@ export const useCardStore = defineStore('card', () => {
     prompt,
     width,
     height,
-    card,
+    frame,
     addCard,
     aspectRatio,
     setAspectRatio,
