@@ -126,9 +126,23 @@
     <v-icon>mdi-plus</v-icon>
     <v-tooltip
       activator="parent"
-      location="top"
+      location="left"
     >
       Add new frame
+    </v-tooltip>
+  </v-btn>
+
+  <v-btn
+    v-if="showScrollToTop"
+    class="scroll-btn position-fixed rounded-circle"
+    @click="scrollToTop"
+  >
+    <v-icon>mdi-arrow-up</v-icon>
+    <v-tooltip
+      activator="parent"
+      location="top"
+    >
+      Scroll up
     </v-tooltip>
   </v-btn>
 
@@ -152,13 +166,14 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed } from 'vue'
+  import { ref, computed, onMounted } from 'vue'
   import { useCardStore } from '@/store/card'
 
   const cardStore = useCardStore()
   const errorState = ref(false)
   const errorMessage = ref('')
   const dialogs = ref<boolean[]>([])
+  const showScrollToTop = ref<boolean>(false)
 
   const addNewFrame = () => {
     cardStore.addCard()
@@ -268,6 +283,22 @@
       }
     })
   }
+
+  const handleScroll = () => {
+    if (window.scrollY > 800) {
+      showScrollToTop.value = true
+    } else {
+      showScrollToTop.value = false
+    }
+  }
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  onMounted(() => {
+    window.addEventListener('scroll', handleScroll)
+  })
 </script>
 
 <style scoped>
@@ -290,6 +321,12 @@
   .frame-btn {
     right: 10px;
     bottom: 10px;
+    height: 60px;
+  }
+
+  .scroll-btn {
+    right: 10px;
+    bottom: 90px;
     height: 60px;
   }
 </style>
