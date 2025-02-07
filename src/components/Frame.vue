@@ -166,7 +166,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, onMounted } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { useCardStore } from '@/store/card'
   import {
     downloadImg,
@@ -174,6 +174,7 @@
     errorState,
     errorMessage,
   } from '@/composables/useDownload'
+  import { getFrameStyles, getImageStyles } from '@/composables/useFrameStyles'
 
   const cardStore = useCardStore()
   const dialogs = ref<boolean[]>([])
@@ -219,28 +220,6 @@
       frame.isLoading = false
     }
   }
-
-  const getFrameStyles = computed(() => {
-    if (cardStore.aspectRatio === 'landscape') {
-      return { width: '300px', height: '250px' }
-    } else if (cardStore.aspectRatio === 'square') {
-      return { width: '250px', height: '250px' }
-    } else if (cardStore.aspectRatio === 'portrait') {
-      return { width: '300px', height: '500px' }
-    }
-    return {}
-  })
-
-  const getImageStyles = computed(() => {
-    if (cardStore.aspectRatio === 'landscape') {
-      return { height: '200px' }
-    } else if (cardStore.aspectRatio === 'square') {
-      return { height: '200px' }
-    } else if (cardStore.aspectRatio === 'portrait') {
-      return { height: '450px' }
-    }
-    return {}
-  })
 
   const deleteFrame = (id: number, index: number) => {
     cardStore.frame = cardStore.frame.filter((frame) => frame.id !== id)
