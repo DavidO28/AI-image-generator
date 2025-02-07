@@ -168,10 +168,14 @@
 <script setup lang="ts">
   import { ref, computed, onMounted } from 'vue'
   import { useCardStore } from '@/store/card'
+  import {
+    downloadImg,
+    downloadAllImages,
+    errorState,
+    errorMessage,
+  } from '@/composables/useDownload'
 
   const cardStore = useCardStore()
-  const errorState = ref(false)
-  const errorMessage = ref('')
   const dialogs = ref<boolean[]>([])
   const showScrollToTop = ref<boolean>(false)
 
@@ -241,47 +245,6 @@
   const deleteFrame = (id: number, index: number) => {
     cardStore.frame = cardStore.frame.filter((frame) => frame.id !== id)
     dialogs.value[index] = false
-  }
-
-  const downloadImg = (index: number) => {
-    let imgPath = cardStore.frame[index].url
-    let fileName = getFileName(imgPath)
-
-    fetch(imgPath)
-      .then((res) => res.blob())
-      .then((blob) => {
-        const url = window.URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.style.display = 'none'
-        a.href = url
-        a.download = fileName
-        document.body.appendChild(a)
-        a.click()
-        window.URL.revokeObjectURL(url)
-      })
-      .catch((error) => {
-        console.error('Download failed', error)
-      })
-  }
-
-  const getFileName = (str: string) => {
-    return str.substring(str.lastIndexOf('/') + 1)
-  }
-
-  const downloadAllImages = () => {
-    const hasGeneratedImage = cardStore.frame.some((frame) => frame.url)
-
-    if (!hasGeneratedImage) {
-      errorState.value = true
-      errorMessage.value = 'Generate at least one image in order to download'
-      return
-    }
-
-    cardStore.frame.forEach((frame, index) => {
-      if (frame.url) {
-        downloadImg(index)
-      }
-    })
   }
 
   const handleScroll = () => {
