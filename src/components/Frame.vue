@@ -1,12 +1,5 @@
 <template>
-  <div class="mt-2 d-flex justify-center">
-    <v-btn
-      v-if="cardStore.frame.length > 1"
-      @click="downloadAllImages"
-    >
-      Download all images
-    </v-btn>
-  </div>
+  <DownloadAll />
   <div class="d-flex flex-wrap justify-center ga-4 pa-3">
     <div
       v-for="(frame, index) in cardStore.frame"
@@ -170,11 +163,11 @@
   import { useCardStore } from '@/store/card'
   import {
     downloadImg,
-    downloadAllImages,
     errorState,
     errorMessage,
   } from '@/composables/useDownload'
   import { getFrameStyles, getImageStyles } from '@/composables/useFrameStyles'
+  import DownloadAll from '@/components/DownloadAll.vue'
 
   const cardStore = useCardStore()
   const dialogs = ref<boolean[]>([])
