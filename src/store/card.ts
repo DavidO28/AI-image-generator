@@ -3,8 +3,8 @@ import { ref } from 'vue'
 
 export const useCardStore = defineStore('card', () => {
   const prompt = ref<string>('')
-  const width = ref<number | null>(null)
-  const height = ref<number | null>(null)
+  const width = ref<string | null>(null)
+  const height = ref<string | null>(null)
   const aspectRatio = ref<string>('')
 
   const frame = ref([
@@ -32,15 +32,20 @@ export const useCardStore = defineStore('card', () => {
   const setAspectRatio = (ratio: string) => {
     aspectRatio.value = ratio
     if (ratio === 'landscape') {
-      width.value = 1080
-      height.value = 566
+      width.value = '1080'
+      height.value = '566'
     } else if (ratio === 'square') {
-      width.value = 1080
-      height.value = 1080
+      width.value = '566'
+      height.value = '566'
     } else if (ratio === 'portrait') {
-      width.value = 566
-      height.value = 1080
+      width.value = '566'
+      height.value = '1080'
     }
+
+    frame.value.forEach((frameItem) => {
+      frameItem.width = width.value || ''
+      frameItem.height = height.value || ''
+    })
   }
 
   return {
