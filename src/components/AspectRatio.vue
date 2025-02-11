@@ -1,30 +1,22 @@
 <template>
   <div
-    class="container h-screen d-flex flex-column justify-center align-center text-center"
+    class="container h-screen d-flex flex-column justify-center text-center pa-3"
   >
-    <h3 class="mb-4">Choose Image Aspect Ratio</h3>
+    <h1>Visualize your vision</h1>
+    <h3 class="my-4">Choose Image Aspect Ratio</h3>
 
-    <div class="d-flex flex-wrap align-center justify-center ga-5">
+    <div
+      class="d-flex flex-wrap align-center justify-center ga-5 zoom-animation"
+    >
       <v-btn
+        v-for="(label, ratio) in aspectRatios"
+        :key="ratio"
         variant="outlined"
-        class="button aspect-ratio-chip landscape font-weight-bold"
-        @click="cardStore.setAspectRatio('landscape')"
+        class="button aspect-ratio-chip font-weight-bold"
+        :class="ratio"
+        @click="cardStore.setAspectRatio(ratio)"
       >
-        16:9 Landscape
-      </v-btn>
-      <v-btn
-        variant="outlined"
-        class="button aspect-ratio-chip square font-weight-bold"
-        @click="cardStore.setAspectRatio('square')"
-      >
-        1:1 Square
-      </v-btn>
-      <v-btn
-        variant="outlined"
-        class="button aspect-ratio-chip portrait font-weight-bold"
-        @click="cardStore.setAspectRatio('portrait')"
-      >
-        9:16 Portrait
+        {{ label }}
       </v-btn>
     </div>
   </div>
@@ -32,8 +24,13 @@
 
 <script setup lang="ts">
   import { useCardStore } from '@/store/card'
-
   const cardStore = useCardStore()
+
+  const aspectRatios = {
+    landscape: '16:9 Landscape',
+    square: '1:1 Square',
+    portrait: '9:16 Portrait',
+  }
 </script>
 
 <style scoped>
@@ -81,5 +78,22 @@
 
   .button:hover.aspect-ratio-chip::before {
     background-color: greenyellow;
+  }
+
+  .zoom-animation {
+    opacity: 0;
+    transform: scale(0);
+    animation: zoomIn 1s ease-out forwards;
+  }
+
+  @keyframes zoomIn {
+    0% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 </style>
