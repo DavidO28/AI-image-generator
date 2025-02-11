@@ -1,4 +1,3 @@
-<!-- Layout.vue -->
 <template>
   <DownloadAll />
   <div class="d-flex flex-wrap justify-center ga-4 pa-3">
@@ -8,7 +7,6 @@
       class="border-md rounded-lg overflow-hidden d-flex flex-column"
       :style="getFrameStyles"
     >
-      <!-- Frame card content (same as before) -->
       <v-card
         variant="flat"
         class="position-relative"
