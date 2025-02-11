@@ -1,3 +1,4 @@
+<!-- Layout.vue -->
 <template>
   <DownloadAll />
   <div class="d-flex flex-wrap justify-center ga-4 pa-3">
@@ -7,6 +8,7 @@
       class="border-md rounded-lg overflow-hidden d-flex flex-column"
       :style="getFrameStyles"
     >
+      <!-- Frame card content (same as before) -->
       <v-card
         variant="flat"
         class="position-relative"
@@ -112,32 +114,9 @@
     </div>
   </div>
 
-  <v-btn
-    class="frame-btn position-fixed rounded-circle"
-    @click="addNewFrame"
-  >
-    <v-icon>mdi-plus</v-icon>
-    <v-tooltip
-      activator="parent"
-      location="left"
-    >
-      Add new frame
-    </v-tooltip>
-  </v-btn>
+  <AddNewFrame @add-frame="addNewFrame" />
 
-  <v-btn
-    v-if="showScrollToTop"
-    class="scroll-btn position-fixed rounded-circle"
-    @click="scrollToTop"
-  >
-    <v-icon>mdi-arrow-up</v-icon>
-    <v-tooltip
-      activator="parent"
-      location="top"
-    >
-      Scroll up
-    </v-tooltip>
-  </v-btn>
+  <ScrollButton />
 
   <v-snackbar
     v-model="errorState"
@@ -159,7 +138,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue'
+  import { ref } from 'vue'
   import { useCardStore } from '@/store/card'
   import {
     downloadImg,
@@ -168,10 +147,11 @@
   } from '@/composables/useDownload'
   import { getFrameStyles, getImageStyles } from '@/composables/useFrameStyles'
   import DownloadAll from '@/components/DownloadAll.vue'
+  import AddNewFrame from '@/components/AddNewFrame.vue'
+  import ScrollButton from '@/components/ScrollButton.vue'
 
   const cardStore = useCardStore()
   const dialogs = ref<boolean[]>([])
-  const showScrollToTop = ref<boolean>(false)
 
   const addNewFrame = () => {
     cardStore.addCard()
@@ -215,30 +195,9 @@
     cardStore.frame = cardStore.frame.filter((frame) => frame.id !== id)
     dialogs.value[index] = false
   }
-
-  const handleScroll = () => {
-    showScrollToTop.value = window.scrollY > 800
-  }
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
-  onMounted(() => {
-    window.addEventListener('scroll', handleScroll)
-  })
 </script>
 
 <style scoped>
-  .hover-effect:hover {
-    background-color: greenyellow;
-  }
-
-  .image {
-    user-select: none;
-    pointer-events: none;
-  }
-
   .text-input {
     height: 50px;
     resize: none;
@@ -246,17 +205,12 @@
     outline: none;
   }
 
-  .frame-btn,
-  .scroll-btn {
-    right: 10px;
-    height: 60px;
+  .image {
+    user-select: none;
+    pointer-events: none;
   }
 
-  .frame-btn {
-    bottom: 10px;
-  }
-
-  .scroll-btn {
-    bottom: 90px;
+  .hover-effect:hover {
+    background-color: greenyellow;
   }
 </style>
