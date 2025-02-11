@@ -21,7 +21,7 @@
         />
         <div
           v-else
-          :class="{ 'hover-effect': !frame.url }"
+          :class="{ 'hover-effect': !frame.isLoading }"
           class="w-100 h-100 d-flex justify-center align-center overflow-hidden cursor-pointer"
           @click="generateImage(index)"
         >
@@ -29,12 +29,13 @@
             v-if="frame.isLoading"
             color="black"
             indeterminate
-          ></v-progress-circular>
+          />
           <v-icon v-else>mdi-creation</v-icon>
           <span class="ms-3">
             {{ frame.isLoading ? 'Generating...' : 'Generate image' }}
           </span>
         </div>
+
         <v-chip
           variant="elevated"
           color="teal"
@@ -42,6 +43,7 @@
         >
           {{ index + 1 }}
         </v-chip>
+
         <v-chip
           v-if="cardStore.frame.length > 1"
           variant="elevated"
@@ -64,27 +66,25 @@
               title="Delete frame?"
               class="d-flex flex-column align-center"
             >
-              <template v-slot:actions>
-                <v-spacer></v-spacer>
-
+              <v-card-actions>
                 <v-btn
                   color="red"
                   @click="dialogs[index] = false"
                 >
                   No
                 </v-btn>
-
                 <v-btn
                   color="green"
                   @click.stop="deleteFrame(frame.id, index)"
                 >
                   Yes
                 </v-btn>
-              </template>
+              </v-card-actions>
             </v-card>
           </v-dialog>
           <v-icon>mdi-delete</v-icon>
         </v-chip>
+
         <v-chip
           v-if="frame.url"
           @click.stop="downloadImg(index)"
@@ -102,13 +102,13 @@
         </v-chip>
       </v-card>
 
-      <v-divider></v-divider>
+      <v-divider />
       <textarea
         class="text-input px-2 py-1"
         v-model="frame.prompt"
         placeholder="Enter your prompt"
         name="prompt"
-      ></textarea>
+      />
     </div>
   </div>
 
@@ -176,10 +176,7 @@
   const addNewFrame = () => {
     cardStore.addCard()
     setTimeout(() => {
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: 'smooth',
-      })
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
     }, 100)
   }
 
@@ -220,11 +217,7 @@
   }
 
   const handleScroll = () => {
-    if (window.scrollY > 800) {
-      showScrollToTop.value = true
-    } else {
-      showScrollToTop.value = false
-    }
+    showScrollToTop.value = window.scrollY > 800
   }
 
   const scrollToTop = () => {
@@ -253,15 +246,17 @@
     outline: none;
   }
 
-  .frame-btn {
+  .frame-btn,
+  .scroll-btn {
     right: 10px;
-    bottom: 10px;
     height: 60px;
   }
 
+  .frame-btn {
+    bottom: 10px;
+  }
+
   .scroll-btn {
-    right: 10px;
     bottom: 90px;
-    height: 60px;
   }
 </style>
