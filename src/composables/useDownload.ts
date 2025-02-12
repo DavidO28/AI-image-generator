@@ -8,7 +8,7 @@ export const errorMessage = ref('')
 
 export const downloadImg = (index: number) => {
   let imgPath = cardStore.frame[index].url
-  let fileName = getFileName(imgPath)
+  let fileName = getFileName(imgPath, index)
 
   fetch(imgPath)
     .then((res) => res.blob())
@@ -27,8 +27,10 @@ export const downloadImg = (index: number) => {
     })
 }
 
-const getFileName = (str: string) => {
-  return str.substring(str.lastIndexOf('/') + 1)
+const getFileName = (str: string, index: number) => {
+  const prompt = cardStore.frame[index].prompt
+
+  return prompt.length > 50 ? prompt.slice(0, 50) : prompt
 }
 
 export const downloadAllImages = () => {
