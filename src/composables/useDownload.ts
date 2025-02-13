@@ -13,14 +13,28 @@ export const downloadImg = (index: number) => {
   fetch(imgPath)
     .then((res) => res.blob())
     .then((blob) => {
+      const img = new Image()
       const url = window.URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.style.display = 'none'
-      a.href = url
-      a.download = fileName
-      document.body.appendChild(a)
-      a.click()
-      window.URL.revokeObjectURL(url)
+
+      img.onload = () => {
+        const canvas = document.createElement('canvas')
+        canvas.width = img.width
+        canvas.height = img.height
+        const ctx = canvas.getContext('2d')
+        ctx!.drawImage(img, 0, 0)
+
+        canvas.toBlob((newBlob) => {
+          const downloadUrl = window.URL.createObjectURL(newBlob!)
+          const a = document.createElement('a')
+          a.style.display = 'none'
+          a.href = downloadUrl
+          a.download = fileName
+          document.body.appendChild(a)
+          a.click()
+          window.URL.revokeObjectURL(downloadUrl)
+        }, 'image/png')
+      }
+      img.src = url
     })
     .catch((error) => {
       console.error('Download failed', error)
@@ -29,8 +43,9 @@ export const downloadImg = (index: number) => {
 
 const getFileName = (str: string, index: number) => {
   const prompt = cardStore.frame[index].prompt
+  let fileName = prompt.length > 50 ? prompt.slice(0, 50) : prompt
 
-  return prompt.length > 50 ? prompt.slice(0, 50) : prompt
+  return fileName + '.png'
 }
 
 export const downloadAllImages = () => {
