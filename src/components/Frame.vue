@@ -171,7 +171,7 @@
 
     try {
       const response = await fetch(
-        `https://image.pollinations.ai/prompt/${frame.prompt}?width=${frame.width}&height=${frame.height}&nologo=true`,
+        `https://image.pollinations.ai/prompt/${frame.prompt}?width=${frame.width}&height=${frame.height}&nologo=true&model=flux-pro`,
       )
 
       if (response.ok) {
