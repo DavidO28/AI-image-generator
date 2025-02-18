@@ -3,22 +3,21 @@ import { ref } from 'vue'
 
 export const useCardStore = defineStore('card', () => {
   const prompt = ref<string>('')
+  const theme = ref<string>('')
   const width = ref<string | null>(null)
   const height = ref<string | null>(null)
   const aspectRatio = ref<string>('')
-  const frameThemes = ref([
-    {
-      default: '',
-      sketch: 'Theme: sketch (black and white colors only) style',
-      comic: 'Theme: comic book style',
-      animation: 'Theme: animation style',
-      anime: 'Theme: anime style',
-      pixel: 'Theme: pixel style',
-      wood: 'Theme: wood style',
-      dark: 'Theme: dark novel style',
-      cyberpunk: 'Theme: cyberpunk, futuristic style',
-    },
-  ])
+  const themeOptions = [
+    'Theme: Realistic',
+    'Theme: sketch (black and white colors only) style',
+    'Theme: comic book style',
+    'Theme: animation style',
+    'Theme: anime style',
+    'Theme: pixel style',
+    'Theme: wood style',
+    'Theme: dark novel style',
+    'Theme: cyberpunk, futuristic style',
+  ]
 
   const frame = ref([
     {
@@ -28,6 +27,7 @@ export const useCardStore = defineStore('card', () => {
       prompt: '',
       url: '',
       isLoading: false,
+      theme: '',
     },
   ])
 
@@ -39,6 +39,7 @@ export const useCardStore = defineStore('card', () => {
       prompt: '',
       url: '',
       isLoading: false,
+      theme: '',
     })
   }
 
@@ -69,5 +70,7 @@ export const useCardStore = defineStore('card', () => {
     addCard,
     aspectRatio,
     setAspectRatio,
+    themeOptions,
+    theme,
   }
 })

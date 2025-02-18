@@ -1,5 +1,8 @@
 <template>
-  <DownloadAll />
+  <div class="d-flex flex-wrap justify-center ga-4 pa-3">
+    <ThemeSwitcher />
+    <DownloadAll />
+  </div>
   <div class="d-flex flex-wrap justify-center ga-4 pa-3">
     <div
       v-for="(frame, index) in cardStore.frame"
@@ -147,6 +150,7 @@
   import DownloadAll from '@/components/DownloadAll.vue'
   import AddNewFrame from '@/components/AddNewFrame.vue'
   import ScrollButton from '@/components/ScrollButton.vue'
+  import ThemeSwitcher from '@/components/ThemeSwitcher.vue'
 
   const cardStore = useCardStore()
   const dialogs = ref<boolean[]>([])
@@ -171,7 +175,7 @@
 
     try {
       const response = await fetch(
-        `https://image.pollinations.ai/prompt/${frame.prompt}?width=${frame.width}&height=${frame.height}&nologo=true&model=flux-pro`,
+        `https://image.pollinations.ai/prompt/${frame.prompt + frame.theme}?width=${frame.width}&height=${frame.height}&nologo=true&model=flux-pro`,
       )
 
       if (response.ok) {
