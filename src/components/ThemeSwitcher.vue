@@ -1,30 +1,35 @@
 <template>
-  <v-select
-    label="Select theme"
-    :items="cardStore.themeOptions"
-    v-model="selectedTheme"
-    max-width="400px"
-    hide-details
-  ></v-select>
+  <div
+    v-for="frameItem in cardStore.frame"
+    :key="frameItem.id"
+  >
+    <select v-model="frameItem.theme">
+      <option
+        v-for="(theme, id) in cardStore.themeOptions"
+        :key="id"
+        :value="theme"
+      >
+        {{ theme }}
+      </option>
+    </select>
+  </div>
 </template>
 
 <script setup lang="ts">
   import { useCardStore } from '@/store/card'
-  import { ref, watch, onMounted } from 'vue'
+  import { watch } from 'vue'
 
   const cardStore = useCardStore()
 
-  const selectedTheme = ref('')
-
-  onMounted(() => {
-    selectedTheme.value = 'Theme: Realistic'
-  })
-
-  watch(selectedTheme, (newValue) => {
-    if (newValue) {
-      cardStore.frame.forEach((frameItem) => {
-        frameItem.theme = `${newValue}`
+  watch(
+    () => cardStore.frame,
+    (newFrames) => {
+      newFrames.forEach((frameItem) => {
+        if (!frameItem.theme) {
+          frameItem.theme = 'Theme: Realistic'
+        }
       })
-    }
-  })
+    },
+    { immediate: true },
+  )
 </script>
