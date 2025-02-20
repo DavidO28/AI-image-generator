@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-wrap justify-center ga-4 pa-3">
+  <div class="d-flex flex-wrap justify-center align-center ga-4 pa-3">
     <ThemeSwitcher />
     <DownloadAll />
   </div>

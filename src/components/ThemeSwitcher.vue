@@ -5,7 +5,7 @@
   >
     <select
       v-model="frameItem.theme"
-      class="custom-select"
+      class="custom-select pa-1 border-primary rounded border-md"
     >
       <option
         v-for="(theme, id) in cardStore.themeOptions"
@@ -36,19 +36,3 @@
     { immediate: true },
   )
 </script>
-
-<style scoped>
-  .custom-select {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: white;
-  }
-
-  .custom-select:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-</style>
