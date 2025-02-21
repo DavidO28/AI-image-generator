@@ -43,25 +43,6 @@ export const useCardStore = defineStore('card', () => {
     })
   }
 
-  const setAspectRatio = (ratio: string) => {
-    aspectRatio.value = ratio
-    if (ratio === 'landscape') {
-      width.value = '1080'
-      height.value = '566'
-    } else if (ratio === 'square') {
-      width.value = '566'
-      height.value = '566'
-    } else if (ratio === 'portrait') {
-      width.value = '566'
-      height.value = '1080'
-    }
-
-    frame.value.forEach((frameItem) => {
-      frameItem.width = width.value || ''
-      frameItem.height = height.value || ''
-    })
-  }
-
   return {
     prompt,
     width,
@@ -69,7 +50,6 @@ export const useCardStore = defineStore('card', () => {
     frame,
     addCard,
     aspectRatio,
-    setAspectRatio,
     themeOptions,
     theme,
   }

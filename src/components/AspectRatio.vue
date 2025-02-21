@@ -14,9 +14,9 @@
         variant="outlined"
         class="button aspect-ratio-chip font-weight-bold"
         :class="ratio"
-        @click="cardStore.setAspectRatio(ratio)"
+        @click="setAspectRatio(ratio)"
       >
-        {{ label }}
+        {{ ratio }}
       </v-btn>
     </div>
   </div>
@@ -27,9 +27,22 @@
   const cardStore = useCardStore()
 
   const aspectRatios = {
-    landscape: '16:9 Landscape',
-    square: '1:1 Square',
-    portrait: '9:16 Portrait',
+    landscape: { width: '1080', height: '566' },
+    square: { width: '566', height: '566' },
+    portrait: { width: '566', height: '1080' },
+  }
+
+  const setAspectRatio = (ratio: keyof typeof aspectRatios) => {
+    cardStore.aspectRatio = ratio
+
+    const dimensions = aspectRatios[ratio]
+    cardStore.width = dimensions.width
+    cardStore.height = dimensions.height
+
+    cardStore.frame.forEach((frameItem) => {
+      frameItem.width = cardStore.width || ''
+      frameItem.height = cardStore.height || ''
+    })
   }
 </script>
 
