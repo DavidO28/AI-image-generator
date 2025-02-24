@@ -2,7 +2,7 @@
   <div
     class="container h-screen d-flex flex-column justify-center text-center pa-3"
   >
-    <h1>Visualize your vision</h1>
+    <h1>Visualize your vision with the power of AI</h1>
     <h3 class="my-4">Choose Image Aspect Ratio</h3>
 
     <div
