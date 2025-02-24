@@ -1,10 +1,8 @@
 <template>
-  <div
-    v-for="frameItem in cardStore.frame"
-    :key="frameItem.id"
-  >
+  <div>
     <select
-      v-model="frameItem.theme"
+      name="theme-selector"
+      v-model="selectedTheme"
       class="custom-select pa-1 border-primary rounded border-md"
     >
       <option
@@ -20,18 +18,19 @@
 
 <script setup lang="ts">
   import { useCardStore } from '@/store/card'
-  import { watch } from 'vue'
+  import { ref, watch } from 'vue'
 
   const cardStore = useCardStore()
+  const selectedTheme = ref('Theme: Realistic')
 
   watch(
-    () => cardStore.frame,
-    (newFrames) => {
-      newFrames.forEach((frameItem) => {
-        if (!frameItem.theme) {
-          frameItem.theme = 'Theme: Realistic'
-        }
-      })
+    () => selectedTheme.value,
+    (newTheme) => {
+      if (newTheme) {
+        cardStore.frame.forEach((frameItem) => {
+          frameItem.theme = newTheme
+        })
+      }
     },
     { immediate: true },
   )
