@@ -8,15 +8,15 @@ export const useCardStore = defineStore('card', () => {
   const height = ref<string | null>(null)
   const aspectRatio = ref<string>('')
   const themeOptions = [
-    'Theme: Realistic',
-    'Theme: sketch (black and white colors only) style',
-    'Theme: comic book style',
-    'Theme: animation style',
-    'Theme: anime style',
-    'Theme: pixel style',
-    'Theme: wood style',
-    'Theme: dark novel style',
-    'Theme: cyberpunk, futuristic style',
+    'Theme: Realistic style',
+    'Theme: Sketch style',
+    'Theme: Comic book style',
+    'Theme: Animation style',
+    'Theme: Anime style',
+    'Theme: Pixel style',
+    'Theme: Wood style',
+    'Theme: Dark novel style',
+    'Theme: Futuristic style',
   ]
 
   const frame = ref([

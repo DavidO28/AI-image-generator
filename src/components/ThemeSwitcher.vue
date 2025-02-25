@@ -18,10 +18,14 @@
 
 <script setup lang="ts">
   import { useCardStore } from '@/store/card'
-  import { ref, watch } from 'vue'
+  import { onMounted, ref, watch } from 'vue'
 
   const cardStore = useCardStore()
-  const selectedTheme = ref('Theme: Realistic')
+  const selectedTheme = ref('')
+
+  onMounted(() => {
+    selectedTheme.value = 'Theme: Realistic style'
+  })
 
   watch(
     () => selectedTheme.value,
@@ -35,3 +39,9 @@
     { immediate: true },
   )
 </script>
+
+<style scoped lang="css">
+  .custom-select {
+    width: 250px;
+  }
+</style>
