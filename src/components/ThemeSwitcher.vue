@@ -1,5 +1,6 @@
 <template>
   <select
+    name="theme-selector"
     v-model="selectedTheme"
     class="custom-select pa-1 border-primary rounded border-md"
   >

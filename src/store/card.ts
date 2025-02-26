@@ -11,12 +11,14 @@ export const useCardStore = defineStore('card', () => {
     'Theme: Realistic style',
     'Theme: Sketch style',
     'Theme: Comic book style',
-    'Theme: Animation style',
+    'Theme: Animation/Cartoon style',
     'Theme: Anime style',
     'Theme: Pixel style',
     'Theme: Wood style',
     'Theme: Dark novel style',
     'Theme: Futuristic style',
+    'Theme: Oil paint style',
+    'Theme: Video game style',
   ]
 
   const frame = ref([
