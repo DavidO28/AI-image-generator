@@ -6,7 +6,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/ai-image-generator/',
+  base: '/AI-image-generator/',
   plugins: [
     vue(),
     vueDevTools(),

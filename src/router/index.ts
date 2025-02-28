@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
-  history: createWebHistory('/ai-image-generator/'),
+  history: createWebHistory('/AI-image-generator/'),
   routes: [
     {
       path: '/',
